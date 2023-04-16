@@ -95,6 +95,11 @@ namespace _7._7.ООП
                 articul = value;
             }
         }
+
+        public void DisplayArticul<T> (T articulProduct)     // создаем обобщенный метод, который сможет показывать артикул напитка, заданного в строковом или числовом варианте
+        {
+            Console.WriteLine("Артикул напитка {0}", articulProduct);
+        }
     }
 
     class Drink : Product       // создаем класс-наследник Напиток
@@ -103,6 +108,9 @@ namespace _7._7.ООП
         {
             Console.WriteLine("Выбран напиток");
         }
+
+        protected string nameDrink;   // создаем поле с модификатором protected
+
     }
 
     class Alcogol : Drink       // создаем класс-наследник Алкоголь
@@ -111,14 +119,33 @@ namespace _7._7.ООП
         {
             Console.WriteLine("Выбран алкоголь");
         }
+
+        Alcogol alcogol = new Alcogol();
+        public int ageKlient;
+        private string nameAlcogol;
+
+        public string NameAlcogol      // создаем свойство с логикой
+        {
+            set
+            {
+                if (ageKlient >= 18)
+                { nameAlcogol = value; }
+                
+                else
+                { Console.WriteLine("Возраст клиента должен быть не меньше 18"); }
+            }
+            get { return nameAlcogol; }
+        }
     }
 
     class FreeAlcogol : Drink    // Создаем класс-наследник Безалкогольный
     {
         public override void Display()    // переопределяем метод Дисплей в классе-наследнике Безалкогольный напиток
         {
-            Console.WriteLine("Выбран безалкогольный напиток");
+            Console.WriteLine("Выбран безалкогольный напиток {0}", nameDrink);   // использование переменной с модификатором protected в классе-наследнике
         }
+
+
     }
     class Food : Product       // создаем класс-наследник Еда
     {
