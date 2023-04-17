@@ -6,7 +6,18 @@ namespace _7._7.ООП
     {
         public string Address;
     }
-
+    public static class StringExtentions
+    {
+        public static string s = "Доставить по указанному адресу";
+        public static string n = "Доставка возможно только по Москве";
+        public static string DeliveryMoscow (this string adress)   // создаем метод расширения
+        {
+            if (adress.Contains("Москва"))
+            { return s; }
+            else
+            { return n; }
+        }
+    }
     class HomeDelivery : Delivery
     {
         public string NameKurier { get; set; }  // создаем автосвойство для переменной с именем курьера
@@ -35,6 +46,12 @@ namespace _7._7.ООП
             Console.WriteLine("В пункт выдачи номер {0} необходимо доставить заказ", number.ToString);
         }
 
+    }
+
+    class PointNew : PickPointDelivery<int>     // наследование обобщений
+
+    {
+        public PointNew(int numberPoint) : base(numberPoint) { }
 
     }
 
@@ -78,6 +95,19 @@ namespace _7._7.ООП
         public Order()
         {
             shopDelivery = new ShopDelivery();
+        }
+
+        Product[] tovar;             // создаем индексатор, который позволит работать с объектами Product как с массивом
+        public Product this[int index]
+        {
+            get
+            {
+                return tovar[index];
+            }
+            set
+            {
+                tovar[index] = value;
+            }
         }
     }
 
@@ -149,7 +179,12 @@ namespace _7._7.ООП
     }
     class Food : Product       // создаем класс-наследник Еда
     {
+        public string NameOfFood { get; set; }
 
+        public static Food operator + (Food nameFood, Food articulFood)    // перегружаем оператор +, который сможет складывать объекты Food (название товара и его артикул) 
+        {
+            return new Food { NameOfFood = nameFood.NameOfFood + articulFood.NameOfFood };
+        }
     }
 
     internal class Program
